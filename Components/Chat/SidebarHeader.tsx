@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import ChatNavHeader from "./AppNavHeader";
 import { Avatar, IconButton } from "@mui/material";
 import { Stack } from "@mui/material";
@@ -8,8 +8,17 @@ import DataSaverOffIcon from "@mui/icons-material/DataSaverOff";
 import ChatIcon from "@mui/icons-material/Chat";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ChatSearchSection from "./ChatSearchSection";
+import BasicMenu from "../Menu/BasicMenu";
 
 const SidebarHeader = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <ChatNavHeader>
@@ -27,13 +36,19 @@ const SidebarHeader = () => {
             <IconButton>
               <ChatIcon />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={handleClick}>
               <MoreVertIcon />
             </IconButton>
           </Stack>
         </div>
       </ChatNavHeader>
       <ChatSearchSection />
+      <BasicMenu
+        anchorEl={anchorEl}
+        open={open}
+        handleClick={handleClick}
+        handleClose={handleClose}
+      />
     </>
   );
 };

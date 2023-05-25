@@ -11,11 +11,14 @@ module.exports = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "whatsapp-light": "url('/images/whatsapplight.png')",
+        "whatsapp-dark": "url('/images/whatsappdark.png')",
       },
       backgroundColor: {
         whatsapp: "#00A884",
         chatLayoutbg: "#F0F2F5",
         playerBg: "rgba(11,20,26,.45)",
+        chatfooter: "#CBD1D5",
       },
       textColor: {
         iconsdeep: "#54656F",
