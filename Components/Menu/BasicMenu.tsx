@@ -3,19 +3,12 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebase";
 
 export default function BasicMenu({
   anchorEl,
   open,
-  handleClick,
   handleClose,
 }: {
   anchorEl: any;
@@ -23,14 +16,13 @@ export default function BasicMenu({
   handleClick: any;
   handleClose: any;
 }) {
-  //   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  //   const open = Boolean(anchorEl);
-  //   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-  //     setAnchorEl(event.currentTarget);
-  //   };
-  //   const handleClose = () => {
-  //     setAnchorEl(null);
-  //   };
+  const signoutHandler = async () => {
+    try {
+      await signOut(auth);
+      console.log("Signed out");
+      handleClose();
+    } catch (error) {}
+  };
   return (
     <React.Fragment>
       <Menu
@@ -73,12 +65,26 @@ export default function BasicMenu({
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>New group</MenuItem>
-        <MenuItem onClick={handleClose}>New community</MenuItem>
-        <MenuItem onClick={handleClose}>Starred messages</MenuItem>
-        <MenuItem onClick={handleClose}>Select chats</MenuItem>
-        <MenuItem onClick={handleClose}>Settings</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>
+          <span className="text-sm text-iconsdeep">New group</span>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <span className="text-sm text-iconsdeep">New community</span>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <span className="text-sm text-iconsdeep">Starred messages</span>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <span className="text-sm text-iconsdeep">Select chats</span>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <span className="text-sm text-iconsdeep">Settings</span>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <span onClick={signoutHandler} className="text-sm text-iconsdeep">
+            Logout
+          </span>
+        </MenuItem>
       </Menu>
     </React.Fragment>
   );

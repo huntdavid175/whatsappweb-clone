@@ -6,12 +6,12 @@
 /* Firefox */
 * {
   scrollbar-width: none;
-  /* scrollbar-color: var(--secondary) var(--primary); */
+  /*  scrollbar-color: var(--secondary) var(--primary); */
 }
 
 .scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #cfd1d3 #fff;
+  scrollbar-color: #cfd1d3 transparent;
 }
 
 /* Chrome, Edge, and Safari */

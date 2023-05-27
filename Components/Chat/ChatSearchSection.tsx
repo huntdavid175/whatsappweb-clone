@@ -23,9 +23,10 @@ const ChatSearchSection = () => {
           boxShadow: "none",
         }}
       >
-        <IconButton sx={{ p: "6px" }} aria-label="menu">
-          <SearchIcon />
-        </IconButton>
+        <span className="px-2">
+          <SearchIcon sx={{ fontSize: "19px" }} />
+        </span>
+
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search or start new search"

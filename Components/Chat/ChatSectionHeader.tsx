@@ -9,8 +9,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 const ChatSectionHeader = () => {
   return (
     <>
-      {" "}
-      <AppNavHeader>
+      <AppNavHeader leftBorder>
         <div className="flex justify-center items-center space-x-2">
           <Avatar alt="Owner Avatar" />
           <span className="text-base font-normal text-gray-800">Ali Pio</span>

@@ -17,8 +17,10 @@ module.exports = {
       backgroundColor: {
         whatsapp: "#00A884",
         chatLayoutbg: "#F0F2F5",
+        Layoutbg: "#D1D7DB",
         playerBg: "rgba(11,20,26,.45)",
         chatfooter: "#CBD1D5",
+        ownmessage: "#D9FDD3",
       },
       textColor: {
         iconsdeep: "#54656F",

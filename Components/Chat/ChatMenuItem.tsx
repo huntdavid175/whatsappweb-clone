@@ -10,7 +10,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import { ListItemButton } from "@mui/material";
 import { IoIosDoneAll } from "react-icons/io";
 
-const ChatMenuItem = () => {
+const ChatMenuItem = ({ read }: { read: boolean }) => {
   return (
     <>
       {/* <ListItemButton> */}
@@ -46,11 +46,15 @@ const ChatMenuItem = () => {
         <div className="w-full m-auto h-full ">
           <div className="flex w-full justify-between">
             <p>Ali Pio</p>
-            <span className="text-xs">4/14/2023</span>
+            <span className="text-xs text-iconsdeep">4/14/2023</span>
           </div>
           <div className="text-sm w-[290px] min-w-[300px] ">
             <Typography noWrap sx={{ fontSize: "0.875rem", color: "#54656F" }}>
-              <span className="inline-block text-blue-400 mr-1">
+              <span
+                className={`inline-block ${
+                  read ? " text-blue-400" : "text-iconsdeep"
+                } mr-1`}
+              >
                 <DoneAllIcon sx={{ fontSize: "1.2rem" }} />
                 {/* <IoIosDoneAll /> */}
               </span>

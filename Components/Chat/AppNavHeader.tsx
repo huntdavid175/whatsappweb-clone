@@ -9,7 +9,15 @@ import ChatIcon from "@mui/icons-material/Chat";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ChatSearchSection from "./ChatSearchSection";
 
-const AppNavHeader = ({ children }: { children: React.ReactNode }) => {
+const AppNavHeader = ({
+  children,
+  leftBorder,
+  rightBorder,
+}: {
+  children: React.ReactNode;
+  leftBorder?: boolean;
+  rightBorder?: boolean;
+}) => {
   return (
     // <div className="w-full  sticky left-0 top-0 z-1000000">
     //   <div className=" w-full  px-4 py-2 bg-chatLayoutbg flex justify-between items-center">
@@ -37,7 +45,11 @@ const AppNavHeader = ({ children }: { children: React.ReactNode }) => {
     // </div>
 
     <div className="w-full  sticky left-0 top-0 z-1000000">
-      <div className=" w-full  px-4 py-2 bg-chatLayoutbg flex justify-between items-center">
+      <div
+        className={` w-full  px-4 py-2 bg-chatLayoutbg flex justify-between items-center ${
+          leftBorder ? "border-l-2" : ""
+        } ${rightBorder ? "border-r-2" : ""}`}
+      >
         {children}
       </div>
     </div>
