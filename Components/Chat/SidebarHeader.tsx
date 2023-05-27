@@ -51,7 +51,7 @@ const SidebarHeader = () => {
     <>
       <ChatNavHeader>
         <div>
-          <Avatar alt="Owner Avatar" src={user?.photoURL} />
+          <Avatar alt="Owner Avatar" />
         </div>
         <div className="text-iconsdeep ">
           <Stack direction="row" spacing={1}>
