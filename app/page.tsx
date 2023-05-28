@@ -1,7 +1,7 @@
 "use client";
 
-import InitialLoad from "@/Components/Initial/InitialLoad";
-import Presentation from "@/Components/Initial/Presentation";
+import InitialLoad from "@/components/Initial/InitialLoad";
+import Presentation from "@/components/Initial/Presentation";
 
 import { auth } from "@/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";

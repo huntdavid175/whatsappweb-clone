@@ -1,6 +1,6 @@
 "use client";
 
-import ChatContainer from "@/Components/Chat/ChatContainer";
+import ChatContainer from "@/components/Chat/ChatContainer";
 import { firebaseApp } from "@/firebase";
 import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";

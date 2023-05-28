@@ -5,7 +5,7 @@ import { auth } from "@/firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { redirect } from "next/navigation";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import InitialLoad from "@/Components/Initial/InitialLoad";
+import InitialLoad from "@/components/Initial/InitialLoad";
 
 const provider = new GoogleAuthProvider();
 
