@@ -2,7 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
-
+//metadat
 export const metadata = {
   title: "WhatsApp Clone",
   description: "A whatsapp web clone",
