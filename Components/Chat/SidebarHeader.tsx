@@ -14,7 +14,7 @@ import { auth, firebaseApp } from "@/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const SidebarHeader = () => {
-  // const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [userFetched, setUserFetched] = useState<boolean>(false);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -26,32 +26,33 @@ const SidebarHeader = () => {
     setAnchorEl(null);
   };
 
-  // useEffect(() => {
-  //   const auth = getAuth();
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       // User is signed in, see docs for a list of available properties
-  //       // https://firebase.google.com/docs/reference/js/auth.user
-  //       console.log(user);
-  //       setUser(user);
-  //       const uid = user.uid;
-  //       // ...
-  //     } else {
-  //       // User is signed out
-  //       // ...
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        console.log(user);
+        setUser(user);
+        const uid = user.uid;
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+  }, []);
 
-  const [user, loading, error] = useAuthState(auth);
-
-  console.log(user);
+  // const [user, loading, error] = useAuthState(auth);
 
   return (
     <>
       <ChatNavHeader>
         <div>
-          <Avatar alt="Owner Avatar" />
+          <Avatar
+            alt="Owner Avatar"
+            src={user?.photoURL ? user?.photoURL : undefined}
+          />
         </div>
         <div className="text-iconsdeep ">
           <Stack direction="row" spacing={1}>
