@@ -10,13 +10,21 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import { ListItemButton } from "@mui/material";
 import { IoIosDoneAll } from "react-icons/io";
 
-const ChatMenuItem = ({ read }: { read: boolean }) => {
+const ChatMenuItem = ({
+  read,
+  photoURL,
+  displayName,
+}: {
+  read: boolean;
+  photoURL: string;
+  displayName: string;
+}) => {
   return (
     <>
       {/* <ListItemButton> */}
       <ListItem alignItems="flex-start" button>
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar alt="Remy Sharp" src={photoURL} />
         </ListItemAvatar>
         {/* <ListItemText
             sx={{
@@ -45,7 +53,7 @@ const ChatMenuItem = ({ read }: { read: boolean }) => {
           /> */}
         <div className="w-full m-auto h-full ">
           <div className="flex w-full justify-between">
-            <p>Ali Pio</p>
+            <p>{displayName}</p>
             <span className="text-xs text-iconsdeep">4/14/2023</span>
           </div>
           <div className="text-sm w-[290px] min-w-[300px] ">
