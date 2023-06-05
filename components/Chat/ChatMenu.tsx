@@ -4,25 +4,28 @@ import ChatMenuItem from "./ChatMenuItem";
 import List from "@mui/material/List/List";
 import { doc, setDoc } from "firebase/firestore";
 
-const ChatMenu = ({ messages }: { messages: any[] }) => {
+const ChatMenu = ({ chats, addContact }: { chats: any[]; addContact: any }) => {
   const createMessageWithUser = async () => {
     // const messageRef =
   };
-  console.log(messages);
+  console.log(chats);
   return (
     <div className="w-full flex flex-grow overflow-y-auto scrollbar ">
       <List sx={{ width: "100%", bgcolor: "background.paper" }} component="nav">
-        {messages.map((message) => (
+        {chats.map((chat) => (
           <ChatMenuItem
-            key={message.photoUrl}
+            key={chat.userId}
             read
-            photoURL={message.photoUrl}
-            displayName={message.name}
+            photoURL={chat.photoUrl}
+            displayName={chat.name}
+            id={chat.userId}
+            addContact={addContact}
+            lastMessage={chat.lastMessage}
           />
         ))}
-        <ChatMenuItem read photoURL="" displayName="Jesse Lingard" />
+        {/* <ChatMenuItem read photoURL="" displayName="Jesse Lingard" />
         <ChatMenuItem read={false} photoURL="" displayName="Ali Pio" />
-        <ChatMenuItem read photoURL="" displayName="Aisha Banda" />
+        <ChatMenuItem read photoURL="" displayName="Aisha Banda" /> */}
       </List>
     </div>
   );

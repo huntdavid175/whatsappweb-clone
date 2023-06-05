@@ -13,8 +13,8 @@ export const store = configureStore({
   middleware: [thunk],
 });
 
-const storedUser =
-  typeof localStorage !== "undefined" && localStorage.getItem("user");
+const storedUser = localStorage.getItem("user");
+// typeof localStorage !== "undefined" && localStorage.getItem("user");
 
 // console.log(JSON.parse(storedUser).user);
 

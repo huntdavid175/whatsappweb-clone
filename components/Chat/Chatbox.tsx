@@ -8,12 +8,22 @@ import ChatDrawer from "../UI/ChatDrawer";
 import SpeedDIal from "../UI/SpeedDial";
 import MessageBubble from "./MessageBubble";
 import ChatDate from "../UI/ChatDate";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/GlobalRedux/store";
 
 const Chatbox = () => {
+  const currentUser = useSelector(
+    (state: RootState) => state.chats.currentChat
+  );
+
+  console.log(currentUser);
   return (
     <>
       <div className="h-full flex-shrink-0 flex flex-col grow min-w-[700px] ">
-        <ChatSectionHeader />
+        <ChatSectionHeader
+          displayName={currentUser.name}
+          photoUrl={currentUser.photoUrl}
+        />
         <div className="w-full   flex-1  overflow-scroll bg-whatsapp-light scrollbar pt-8 px-8 py-1">
           <ChatDate date=" 5/13/2023" />
           <MessageBubble

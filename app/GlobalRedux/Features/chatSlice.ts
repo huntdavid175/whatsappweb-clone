@@ -1,15 +1,27 @@
 "use client";
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { useDispatch } from "react-redux";
+
 import { db } from "@/firebase";
 
 type ChatState = {
   chats: any[];
+  currentChat: {
+    name: string | undefined;
+    photoUrl: string | undefined;
+    chatId: string | undefined;
+    messages: any[];
+  };
 };
 
 const initialState: ChatState = {
   chats: [],
+  currentChat: {
+    name: undefined,
+    photoUrl: undefined,
+    chatId: undefined,
+    messages: [],
+  },
 };
 
 const fetchChats = createAsyncThunk(
@@ -39,6 +51,10 @@ const chatSlice = createSlice({
     addChats: (state, action: PayloadAction<any>) => {
       state.chats = action.payload;
     },
+    setCurrentchat: (state, action: PayloadAction<any>) => {
+      console.log(action.payload);
+      state.currentChat = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChats.fulfilled, (state, action: PayloadAction) => {
@@ -46,7 +62,7 @@ const chatSlice = createSlice({
     });
   },
 });
-export const { addChats } = chatSlice.actions;
+export const { addChats, setCurrentchat } = chatSlice.actions;
 export { fetchChats };
 
 export default chatSlice.reducer;

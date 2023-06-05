@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -14,15 +15,27 @@ const ChatMenuItem = ({
   read,
   photoURL,
   displayName,
+  addContact,
+  id,
+  lastMessage,
 }: {
   read: boolean;
   photoURL: string;
   displayName: string;
+  addContact: any;
+  id: string;
+  lastMessage: string;
 }) => {
   return (
     <>
       {/* <ListItemButton> */}
-      <ListItem alignItems="flex-start" button>
+      <ListItem
+        alignItems="flex-start"
+        button
+        onClick={() => {
+          addContact(id, displayName, photoURL);
+        }}
+      >
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src={photoURL} />
         </ListItemAvatar>
@@ -66,8 +79,7 @@ const ChatMenuItem = ({
                 <DoneAllIcon sx={{ fontSize: "1.2rem" }} />
                 {/* <IoIosDoneAll /> */}
               </span>
-              Long message can go here i promise you and i will make it worth
-              your while
+              {lastMessage}
             </Typography>
           </div>
         </div>
