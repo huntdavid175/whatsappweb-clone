@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import ChatSectionHeader from "./ChatSectionHeader";
 import ChatFooter from "./ChatFooter";
@@ -12,21 +12,39 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/GlobalRedux/store";
 
 const Chatbox = () => {
-  const currentUser = useSelector(
+  const bottomRef = useRef<HTMLInputElement>(null);
+
+  const currentChatUser = useSelector(
     (state: RootState) => state.chats.currentChat
   );
 
-  console.log(currentUser);
+  const user = useSelector((state: RootState) => state.user.user);
+
+  const messages = useSelector((state: RootState) => state.chats.messages);
+  console.log(messages);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <>
       <div className="h-full flex-shrink-0 flex flex-col grow min-w-[700px] ">
         <ChatSectionHeader
-          displayName={currentUser.name}
-          photoUrl={currentUser.photoUrl}
+          displayName={currentChatUser.name}
+          photoUrl={currentChatUser.photoUrl}
         />
-        <div className="w-full   flex-1  overflow-scroll bg-whatsapp-light scrollbar pt-8 px-8 py-1">
+        <div className="w-full   flex-1  overflow-scroll bg-whatsapp-light scrollbar pt-8 px-8 py-1 relative">
           <ChatDate date=" 5/13/2023" />
-          <MessageBubble
+          {messages.map((message) => (
+            <MessageBubble
+              key={message.id}
+              self={message.accountOwnerId === user.userId}
+              forwarded={message.forwarded}
+              message={message.message}
+            />
+          ))}
+          {/* <MessageBubble
             self={false}
             forwarded
             message=" MessageBubble this is where messages re written i honestly don't know
@@ -62,7 +80,8 @@ const Chatbox = () => {
           />
 
           <MessageBubble self={false} forwarded={true} message="I hate you " />
-          <MessageBubble self={true} forwarded={false} message="Goats " />
+          <MessageBubble self={true} forwarded={false} message="Goats " /> */}
+          <div className="w-full" ref={bottomRef}></div>
         </div>
 
         <ChatFooter />

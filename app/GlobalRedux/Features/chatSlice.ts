@@ -10,8 +10,10 @@ type ChatState = {
     name: string | undefined;
     photoUrl: string | undefined;
     chatId: string | undefined;
+    userId: string | undefined;
     messages: any[];
   };
+  messages: any[];
 };
 
 const initialState: ChatState = {
@@ -20,29 +22,31 @@ const initialState: ChatState = {
     name: undefined,
     photoUrl: undefined,
     chatId: undefined,
+    userId: undefined,
     messages: [],
   },
+  messages: [],
 };
 
-const fetchChats = createAsyncThunk(
-  "chats/userchats",
-  async (_, { dispatch }) => {
-    const q = query(collection(db, "chats"));
-    let userChats: any = [];
+// const fetchChats = createAsyncThunk(
+//   "chats/userchats",
+//   async (_, { dispatch }) => {
+//     const q = query(collection(db, "chats"));
+//     let userChats: any = [];
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const chats: any = [];
-      querySnapshot.forEach((doc) => {
-        chats.push(doc.data().name);
-        userChats = chats;
-        dispatch(addChats(chats));
-      });
-      //   return userChats
-    });
+//     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+//       const chats: any = [];
+//       querySnapshot.forEach((doc) => {
+//         chats.push(doc.data().name);
+//         userChats = chats;
+//         dispatch(addChats(chats));
+//       });
+//       //   return userChats
+//     });
 
-    return userChats;
-  }
-);
+//     return userChats;
+//   }
+// );
 
 const chatSlice = createSlice({
   name: "chats",
@@ -52,17 +56,20 @@ const chatSlice = createSlice({
       state.chats = action.payload;
     },
     setCurrentchat: (state, action: PayloadAction<any>) => {
-      console.log(action.payload);
       state.currentChat = action.payload;
     },
+    loadChatMessages: (state, action: PayloadAction<any>) => {
+      //   console.log(action.payload);
+      state.messages = action.payload;
+    },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchChats.fulfilled, (state, action: PayloadAction) => {
-      state.chats;
-    });
-  },
+  //   extraReducers: (builder) => {
+  //     builder.addCase(fetchChats.fulfilled, (state, action: PayloadAction) => {
+  //       state.chats;
+  //     });
+  //   },
 });
-export const { addChats, setCurrentchat } = chatSlice.actions;
-export { fetchChats };
+export const { addChats, setCurrentchat, loadChatMessages } = chatSlice.actions;
+// export { fetchChats };
 
 export default chatSlice.reducer;

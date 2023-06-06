@@ -15,7 +15,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { RootState } from "@/app/GlobalRedux/store";
 import { useSelector } from "react-redux";
 
-const SidebarHeader = () => {
+const SidebarHeader = React.memo(({ photoUrl }: { photoUrl: string }) => {
   // const [user, setUser] = useState<User | null>(null);
   // const [userFetched, setUserFetched] = useState<boolean>(false);
 
@@ -45,8 +45,8 @@ const SidebarHeader = () => {
   //   });
   // }, []);
 
-  const user = useSelector((state: RootState) => state.user.user);
-  console.log(user);
+  // const user = useSelector((state: RootState) => state.user.user);
+  // console.log(user);
 
   // const [user, loading, error] = useAuthState(auth);
   // console.log(user?.photoURL);
@@ -57,7 +57,8 @@ const SidebarHeader = () => {
         <div>
           <Avatar
             alt="Owner Avatar"
-            src={user?.photoUrl ? user?.photoUrl : undefined}
+            // src={user?.photoUrl ? user?.photoUrl : undefined}
+            src={photoUrl}
           />
         </div>
         <div className="text-iconsdeep ">
@@ -87,7 +88,7 @@ const SidebarHeader = () => {
       />
     </>
   );
-};
+});
 
 export default SidebarHeader;
 

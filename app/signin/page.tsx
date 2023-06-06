@@ -40,7 +40,7 @@ const SignIn = () => {
       console.log("exists");
       return;
     } else {
-      await setDoc(doc(db, "chats", id), {});
+      await setDoc(doc(db, "chats", id), { chats: [] });
     }
   };
 
