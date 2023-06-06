@@ -4,6 +4,7 @@ import ChatMenuItem from "./ChatMenuItem";
 import List from "@mui/material/List/List";
 import { doc, setDoc } from "firebase/firestore";
 
+// eslint-disable-next-line react/display-name
 const ChatMenu = React.memo(
   ({
     chats,
@@ -14,9 +15,6 @@ const ChatMenu = React.memo(
     addContact: any;
     chatusers: any[];
   }) => {
-    const createMessageWithUser = async () => {
-      // const messageRef =
-    };
     // console.log(chats);
     return (
       <div className="w-full flex flex-grow overflow-y-auto scrollbar ">

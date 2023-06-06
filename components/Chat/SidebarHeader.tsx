@@ -15,6 +15,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { RootState } from "@/app/GlobalRedux/store";
 import { useSelector } from "react-redux";
 
+// eslint-disable-next-line react/display-name
 const SidebarHeader = React.memo(({ photoUrl }: { photoUrl: string }) => {
   // const [user, setUser] = useState<User | null>(null);
   // const [userFetched, setUserFetched] = useState<boolean>(false);
