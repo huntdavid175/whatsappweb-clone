@@ -22,7 +22,7 @@ const Chatbox = () => {
   const user = useSelector((state: RootState) => state.user.user);
 
   const messages = useSelector((state: RootState) => state.chats.messages);
-  // console.log(messages);
+  // console.log(currentChatUser);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -60,7 +60,7 @@ const Chatbox = () => {
         </div>
 
         <ChatFooter />
-        {messages.length < 1 && <ChatPresentation />}
+        {currentChatUser.name === undefined && <ChatPresentation />}
       </div>
     </>
   );
