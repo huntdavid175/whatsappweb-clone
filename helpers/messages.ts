@@ -11,6 +11,13 @@ const addRecipientToChat = async (
   senderPhotoUrl: string,
   senderUserId: string
 ) => {
+  console.log({
+    chatId,
+    recipientId,
+    senderName,
+    senderPhotoUrl,
+    senderUserId,
+  });
   const docRef = doc(db, "chats", recipientId);
   // console.log(chatId, recipientId);
   const docSnap = await getDoc(docRef);
