@@ -21,6 +21,7 @@ const ChatSearchSection = () => {
           display: "flex",
           alignItems: "center",
           boxShadow: "none",
+          backgroundColor: "none",
         }}
       >
         <span className="px-2">

@@ -13,12 +13,15 @@ import { User, getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth, firebaseApp } from "@/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { RootState } from "@/app/GlobalRedux/store";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { showWhatsAppUsers } from "@/app/GlobalRedux/Features/userSlice";
 
 // eslint-disable-next-line react/display-name
 const SidebarHeader = React.memo(({ photoUrl }: { photoUrl: string }) => {
   // const [user, setUser] = useState<User | null>(null);
   // const [userFetched, setUserFetched] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -28,29 +31,6 @@ const SidebarHeader = React.memo(({ photoUrl }: { photoUrl: string }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  // useEffect(() => {
-  //   const auth = getAuth();
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       // User is signed in, see docs for a list of available properties
-  //       // https://firebase.google.com/docs/reference/js/auth.user
-  //       console.log(user);
-  //       setUser(user);
-  //       const uid = user.uid;
-  //       // ...
-  //     } else {
-  //       // User is signed out
-  //       // ...
-  //     }
-  //   });
-  // }, []);
-
-  // const user = useSelector((state: RootState) => state.user.user);
-  // console.log(user);
-
-  // const [user, loading, error] = useAuthState(auth);
-  // console.log(user?.photoURL);
 
   return (
     <>
@@ -71,7 +51,11 @@ const SidebarHeader = React.memo(({ photoUrl }: { photoUrl: string }) => {
             <IconButton>
               <DataSaverOffIcon />
             </IconButton>
-            <IconButton>
+            <IconButton
+              onClick={() => {
+                dispatch(showWhatsAppUsers(true));
+              }}
+            >
               <ChatIcon />
             </IconButton>
             <IconButton onClick={handleClick}>

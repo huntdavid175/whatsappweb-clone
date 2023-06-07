@@ -3,26 +3,37 @@ import React from "react";
 import ChatMenuItem from "./ChatMenuItem";
 import List from "@mui/material/List/List";
 import { doc, setDoc } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/GlobalRedux/store";
 
 // eslint-disable-next-line react/display-name
 const ChatMenu = React.memo(
   ({
     chats,
     addContact,
-    chatusers,
-  }: {
+    whatsAppUsers,
+    showUsers,
+  }: // chatusers,
+  {
     chats: any[];
     addContact: any;
-    chatusers: any[];
+    whatsAppUsers: any[];
+    showUsers: boolean;
   }) => {
-    // console.log(chats);
+    const user = useSelector((state: RootState) => state.user.user);
+
+    const filteredWhatsAppUsers = whatsAppUsers.filter(
+      (whatsappUser) => whatsappUser.userId !== user.userId
+    );
+
+    let data = showUsers ? filteredWhatsAppUsers : chats;
     return (
       <div className="w-full flex flex-grow overflow-y-auto scrollbar ">
         <List
           sx={{ width: "100%", bgcolor: "background.paper" }}
           component="nav"
         >
-          {chats?.map((chat) => (
+          {data?.map((chat) => (
             <ChatMenuItem
               key={chat.userId}
               read

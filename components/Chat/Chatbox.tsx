@@ -10,6 +10,7 @@ import MessageBubble from "./MessageBubble";
 import ChatDate from "../UI/ChatDate";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/GlobalRedux/store";
+import ChatPresentation from "../Presentational/ChatPresentation";
 
 const Chatbox = () => {
   const bottomRef = useRef<HTMLInputElement>(null);
@@ -21,15 +22,25 @@ const Chatbox = () => {
   const user = useSelector((state: RootState) => state.user.user);
 
   const messages = useSelector((state: RootState) => state.chats.messages);
-  console.log(messages);
+  // console.log(messages);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const formatTime = (timeStamp: any) => {
+    const formattedTime = timeStamp.toDate().toLocaleTimeString(undefined, {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    return formattedTime;
+  };
+
   return (
     <>
-      <div className="h-full flex-shrink-0 flex flex-col grow min-w-[700px] ">
+      <div className="h-full flex-shrink-0 flex flex-col grow min-w-[700px] relative">
         <ChatSectionHeader
           displayName={currentChatUser.name}
           photoUrl={currentChatUser.photoUrl}
@@ -42,49 +53,14 @@ const Chatbox = () => {
               self={message.accountOwnerId === user.userId}
               forwarded={message.forwarded}
               message={message.message}
+              time={formatTime(message.timeStamp)}
             />
           ))}
-          {/* <MessageBubble
-            self={false}
-            forwarded
-            message=" MessageBubble this is where messages re written i honestly don't know
-        why its like that but i hpe it ends soon"
-          />
-
-          <MessageBubble self={false} forwarded={false} message="*" />
-
-          <MessageBubble
-            self={true}
-            forwarded={false}
-            message="I don't get you "
-          />
-          <MessageBubble self={true} forwarded={false} message=". " />
-          <MessageBubble
-            self={true}
-            forwarded={false}
-            message="Honestly i don't see the reason why you should be angry "
-          />
-          <MessageBubble self={false} forwarded={false} message="Lol " />
-          <MessageBubble
-            self={false}
-            forwarded={false}
-            message="You are joking right ? "
-          />
-          <ChatDate date="TODAY" />
-          <MessageBubble self={true} forwarded={false} message="Lol " />
-          <MessageBubble self={false} forwarded={true} message="I hate you " />
-          <MessageBubble
-            self={false}
-            forwarded={false}
-            message="That is what she sent to me "
-          />
-
-          <MessageBubble self={false} forwarded={true} message="I hate you " />
-          <MessageBubble self={true} forwarded={false} message="Goats " /> */}
           <div className="w-full" ref={bottomRef}></div>
         </div>
 
         <ChatFooter />
+        {messages.length < 1 && <ChatPresentation />}
       </div>
     </>
   );

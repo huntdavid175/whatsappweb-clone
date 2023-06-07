@@ -11,10 +11,18 @@ interface WhatsappUser {
 
 interface UserState {
   user: WhatsappUser;
+  whatsAppUsers: {
+    showUsers: boolean;
+    users: WhatsappUser[];
+  };
 }
 
 const initialState: UserState = {
   user: { name: "", photoUrl: "", userId: "", email: "" },
+  whatsAppUsers: {
+    showUsers: false,
+    users: [],
+  },
 };
 
 export const userSlice = createSlice({
@@ -25,9 +33,18 @@ export const userSlice = createSlice({
       // console.log(action.payload);
       state.user = action.payload;
     },
+
+    showWhatsAppUsers: (state, action: PayloadAction<any>) => {
+      state.whatsAppUsers.showUsers = action.payload;
+    },
+
+    loadWhatsAppUsers: (state, action: PayloadAction<any>) => {
+      state.whatsAppUsers.users = action.payload;
+    },
   },
 });
 
-export const { addUser } = userSlice.actions;
+export const { addUser, showWhatsAppUsers, loadWhatsAppUsers } =
+  userSlice.actions;
 
 export default userSlice.reducer;

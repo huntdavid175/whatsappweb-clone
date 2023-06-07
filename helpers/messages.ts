@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "@/firebase";
 import { v4 as uuid } from "uuid";
 
@@ -12,10 +12,10 @@ const addRecipientToChat = async (
   senderUserId: string
 ) => {
   const docRef = doc(db, "chats", recipientId);
-  console.log(chatId, recipientId);
+  // console.log(chatId, recipientId);
   const docSnap = await getDoc(docRef);
 
-  console.log(chatId, recipientId);
+  // console.log(chatId, recipientId);
 
   if (docSnap.exists()) {
     const currentChats = docSnap.data().chats;
@@ -63,7 +63,14 @@ const sendMessage = async (
     const currentMessages = docSnap.data().messages;
     const updatedMessages = [
       ...currentMessages,
-      { id, accountOwnerId, message, forwarded: false, read: false },
+      {
+        id,
+        accountOwnerId,
+        message,
+        forwarded: false,
+        read: false,
+        timeStamp: Timestamp.now(),
+      },
     ];
     resetForm("");
     await updateDoc(docRef, { messages: updatedMessages });
@@ -81,6 +88,7 @@ const sendMessage = async (
       message,
       forwarded: false,
       read: false,
+      timeStamp: Timestamp.now(),
     };
     resetForm("");
 

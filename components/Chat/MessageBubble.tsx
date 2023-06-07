@@ -8,11 +8,14 @@ const MessageBubble = ({
   message,
   self,
   forwarded,
+  time,
 }: {
   message: string;
   self: boolean;
   forwarded: boolean;
+  time: any;
 }) => {
+  // console.log(time);
   return (
     <div className={`my-1 flex ${self ? "justify-end" : "justify-start"}`}>
       <div
@@ -38,7 +41,7 @@ const MessageBubble = ({
 
         <span className="text-sm text-gray-700">{message}</span>
         <span className="text-xs absolute bottom-0 right-4 text-iconsdeep ">
-          8:44 AM {self && <DoneAllIcon sx={{ fontSize: "1.2rem" }} />}
+          {time} {self && <DoneAllIcon sx={{ fontSize: "1.2rem" }} />}
         </span>
       </div>
     </div>

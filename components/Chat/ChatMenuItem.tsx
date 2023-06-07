@@ -67,7 +67,9 @@ const ChatMenuItem = ({
         <div className="w-full m-auto h-full ">
           <div className="flex w-full justify-between">
             <p>{displayName}</p>
-            <span className="text-xs text-iconsdeep">4/14/2023</span>
+            {typeof lastMessage === "string" && (
+              <span className="text-xs text-iconsdeep">4/14/2023</span>
+            )}
           </div>
           <div className="text-sm w-[290px] min-w-[300px] ">
             <Typography noWrap sx={{ fontSize: "0.875rem", color: "#54656F" }}>
@@ -76,7 +78,9 @@ const ChatMenuItem = ({
                   read ? " text-blue-400" : "text-iconsdeep"
                 } mr-1`}
               >
-                <DoneAllIcon sx={{ fontSize: "1.2rem" }} />
+                {typeof lastMessage === "string" && (
+                  <DoneAllIcon sx={{ fontSize: "1.2rem" }} />
+                )}
                 {/* <IoIosDoneAll /> */}
               </span>
               {lastMessage}

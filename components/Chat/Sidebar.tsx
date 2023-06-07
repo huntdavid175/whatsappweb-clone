@@ -11,6 +11,7 @@ import {
   collection,
   query,
   where,
+  getDocs,
   onSnapshot,
   doc,
   setDoc,
@@ -25,9 +26,13 @@ import {
   setCurrentchat,
   loadChatMessages,
 } from "@/app/GlobalRedux/Features/chatSlice";
+import {
+  loadWhatsAppUsers,
+  showWhatsAppUsers,
+} from "@/app/GlobalRedux/Features/userSlice";
 
 const Sidebar = () => {
-  const [messages, setMessages] = useState<any[]>([]);
+  // const [messages, setMessages] = useState<any[]>([]);
   const [chats, setChats] = useState<any>([]);
 
   // const chats = useSelector((state: RootState) => state.chats);
@@ -35,20 +40,27 @@ const Sidebar = () => {
   const dispatch = useDispatch<any>();
 
   const user = useSelector((state: RootState) => state.user.user);
+  const showUsers = useSelector(
+    (state: RootState) => state.user.whatsAppUsers.showUsers
+  );
 
-  useEffect(() => {
-    const q = query(collection(db, "users"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const messages: any[] = [];
-      querySnapshot.forEach((doc) => {
-        messages.push(doc.data());
-      });
-      setMessages(messages);
-      // console.log("Current cities in CA: ", messages.join(", "));
-    });
+  const whatsAppUsers = useSelector(
+    (state: RootState) => state.user.whatsAppUsers.users
+  );
 
-    return () => unsubscribe();
-  }, []);
+  // useEffect(() => {
+  //   const q = query(collection(db, "users"));
+  //   const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  //     const messages: any[] = [];
+  //     querySnapshot.forEach((doc) => {
+  //       messages.push(doc.data());
+  //     });
+  //     setMessages(messages);
+  //     // console.log("Current cities in CA: ", messages.join(", "));
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
 
   // Get chats
 
@@ -63,8 +75,33 @@ const Sidebar = () => {
     return () => unsubscribe();
   }, [user]);
 
-  // useEffect(() => {}, []);
+  // Get whatsapp users
 
+  const getWhatsAppUsers = async () => {
+    const users: any[] = [];
+    const querySnapshot = await getDocs(collection(db, "users"));
+    querySnapshot.forEach((doc) => {
+      users.push(doc.data());
+    });
+    return users;
+  };
+
+  useEffect(() => {
+    if (showUsers === true) {
+      const loadUsers = async () => {
+        const users = await getWhatsAppUsers();
+        console.log(users);
+        dispatch(loadWhatsAppUsers(users));
+      };
+
+      loadUsers();
+    }
+  }, [showUsers]);
+
+  console.log(whatsAppUsers);
+  console.log(showUsers);
+
+  // Function to load messages after adding to chat
   const loadMessages = (chatId: string) => {
     let messages: any[] = [];
     onSnapshot(doc(db, "messages", chatId), (doc: any) => {
@@ -72,27 +109,6 @@ const Sidebar = () => {
       dispatch(loadChatMessages(doc.data().messages));
     });
   };
-
-  // const createChatForOtherUser = async (
-  //   otherUserId: string,
-  //   chatId: string
-  // ) => {
-  //   const docRef = doc(db, "chats", otherUserId);
-  //   const docSnap = await getDoc(docRef);
-
-  //   const currentChat = docSnap.data()?.chats;
-  //   const updatedChats = [
-  //     ...currentChat,
-  //     {
-  //       name: user.name,
-  //       photoUrl: user.photoUrl,
-  //       chatId: chatId,
-  //       lastMessage: "",
-  //       userId: user.userId,
-  //     },
-  //   ];
-  //   await updateDoc(docRef, { chats: updatedChats });
-  // };
 
   // Function to add chats and open messages
   const addPersonToChat = async (
@@ -120,6 +136,8 @@ const Sidebar = () => {
         );
 
         loadMessages(alreadyExists.chatId);
+        dispatch(showWhatsAppUsers(false));
+        dispatch(loadWhatsAppUsers([]));
         return;
       } else {
         // create new chat
@@ -148,6 +166,8 @@ const Sidebar = () => {
         );
 
         loadMessages(chatId);
+        dispatch(showWhatsAppUsers(false));
+        dispatch(loadWhatsAppUsers([]));
       }
     } else {
       console.log("enters here");
@@ -183,7 +203,9 @@ const Sidebar = () => {
       <ChatMenu
         chats={chats}
         addContact={addPersonToChat}
-        chatusers={messages}
+        whatsAppUsers={whatsAppUsers}
+        showUsers={showUsers}
+        // chatusers={messages}
       />
     </div>
   );
