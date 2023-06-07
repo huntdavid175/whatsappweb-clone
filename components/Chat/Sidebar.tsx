@@ -161,6 +161,7 @@ const Sidebar = () => {
             name,
             photoUrl,
             chatId: chatId,
+            userId: id,
             messages: [],
           })
         );
