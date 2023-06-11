@@ -2,7 +2,7 @@ import React from "react";
 import { FaEllipsisV } from "react-icons/fa";
 import { BsFillPlayFill } from "react-icons/bs";
 
-const Presentation = () => {
+const Presentation = ({ signin }: { signin: any }) => {
   return (
     <div className="w-full pb-[96px]">
       <div className="w-full h-[222px] absolute top-0 -z-3 bg-whatsapp"></div>
@@ -27,17 +27,32 @@ const Presentation = () => {
         <h3 className="text-white text-sm">WHATSAPP WEB</h3>
       </div>
       <div className="relative w-[1000px] m-auto bg-white rounded-sm shadow-2xl mt-16 pt-16  select-none">
-        <div className="w-full pb-44 px-16 ">
-          <h2 className="text-2xl font-extralight">
-            Use WhatsApp on your computer
-          </h2>
-          <div className="mt-14 space-y-4 text-lg font-light">
-            <div>1. Open WhatsApp on your phone</div>
-            <div>
-              <p>2. Tap Menu or Settings and select Linked Devices </p>
+        <div className="flex w-full">
+          <div className="w-[50%] pb-44 px-16 ">
+            <h2 className="text-2xl font-extralight">
+              Use WhatsApp on your computer
+            </h2>
+            <div className="mt-14 space-y-4 text-lg font-light">
+              <div>1. Open WhatsApp on your phone</div>
+              <div>
+                <p>2. Tap Menu or Settings and select Linked Devices </p>
+              </div>
+              <div>3. Tap on Link a device</div>
+              <div>
+                4. Point your phone to this screen to capture te QR code
+              </div>
             </div>
-            <div>3. Tap on Link a device</div>
-            <div>4. Point your phone to this screen to capture te QR code</div>
+          </div>
+          <div className="w-[50%] flex justify-center items-center">
+            <button
+              type="button"
+              className="px-8 py-2 bg-whatsapp text-white"
+              onClick={() => {
+                signin();
+              }}
+            >
+              Login
+            </button>
           </div>
         </div>
         <div className="w-full flex flex-col justify-center items-center bg-whatsappInitBg py-12 space-y-3">

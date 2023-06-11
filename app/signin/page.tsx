@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { addUser } from "../GlobalRedux/Features/userSlice";
 
-const provider = new GoogleAuthProvider();
 import { User } from "firebase/auth";
 
 const SignIn = () => {
@@ -21,7 +20,7 @@ const SignIn = () => {
   //   const [user, setUser] = useState<any>(null);
   const dispatch = useDispatch();
 
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, appUser, loading, error] = useSignInWithGoogle(auth);
 
   const addUserFunc = async (user: User) => {
     await setDoc(doc(db, "users", user.uid), {
@@ -47,20 +46,20 @@ const SignIn = () => {
   const test = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (user) {
+    if (appUser) {
       const whatAppUser = {
-        name: user.user.displayName,
-        email: user.user.email,
-        photoUrl: user.user.photoURL,
-        userId: user.user.uid,
+        name: appUser.user.displayName,
+        email: appUser.user.email,
+        photoUrl: appUser.user.photoURL,
+        userId: appUser.user.uid,
       };
       // console.log(user.user);
-      addUserFunc(user.user);
-      createUserChat(user.user.uid);
+      addUserFunc(appUser.user);
+      createUserChat(appUser.user.uid);
       dispatch(addUser(whatAppUser));
       redirect("/chat");
     }
-  }, [user]);
+  }, [appUser]);
 
   console.log(test.user);
 

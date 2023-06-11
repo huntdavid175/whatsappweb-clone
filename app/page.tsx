@@ -9,6 +9,14 @@ import { useEffect, useState } from "react";
 import { User, onAuthStateChanged, signOut } from "firebase/auth";
 import { redirect } from "next/navigation";
 
+import { RootState } from "@/app/GlobalRedux/store";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addUser } from "./GlobalRedux/Features/userSlice";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { db } from "@/firebase";
+
 export default function Home() {
   // const [user, loading, error] = useAuthState(auth);
   const [user, setUser] = useState<User | null>(null);
@@ -35,12 +43,63 @@ export default function Home() {
     // return () => unSubscribe();
   }, []);
 
+  // sign in
+
+  const dispatch = useDispatch();
+
+  const [signInWithGoogle, appUser, loading, error] = useSignInWithGoogle(auth);
+
+  const addUserFunc = async (user: User) => {
+    await setDoc(doc(db, "users", user.uid), {
+      name: user.displayName,
+      email: user.email,
+      photoUrl: user.photoURL,
+      userId: user.uid,
+    });
+  };
+
+  const createUserChat = async (id: string) => {
+    const docRef = doc(db, "chats", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log("exists");
+      return;
+    } else {
+      await setDoc(doc(db, "chats", id), { chats: [] });
+    }
+  };
+
+  const test = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (appUser) {
+      const whatAppUser = {
+        name: appUser.user.displayName,
+        email: appUser.user.email,
+        photoUrl: appUser.user.photoURL,
+        userId: appUser.user.uid,
+      };
+      // console.log(user.user);
+      addUserFunc(appUser.user);
+      createUserChat(appUser.user.uid);
+      dispatch(addUser(whatAppUser));
+      redirect("/chat");
+    }
+  }, [appUser]);
+
+  const signInHandler = () => {
+    signInWithGoogle();
+  };
+
   const signoutHandler = async () => {
     try {
       await signOut(auth);
       console.log("Signed out");
     } catch (error) {}
   };
+
+  console.log(user);
 
   return (
     <main className="w-full min-h-screen bg-chatLayoutbg">
@@ -49,7 +108,11 @@ export default function Home() {
         Hello
       </div>
       {/* {userFetched && user === null ? <Presentation /> : null} */}
-      {userFetched ? user === null ? <Presentation /> : null : null}
+      {userFetched ? (
+        user === null ? (
+          <Presentation signin={signInHandler} />
+        ) : null
+      ) : null}
     </main>
   );
 }
